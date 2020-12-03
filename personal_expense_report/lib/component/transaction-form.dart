@@ -1,9 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
+class TransactionForm extends StatefulWidget {
+  final addTransaction;
+
+  TransactionForm(this.addTransaction);
+
+  @override
+  _TransactionFormState createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
   final titleController = TextEditingController();
+
   final valueController = TextEditingController();
+
+  _onSubmit() {
+    var title = this.titleController.text;
+    var value = double.tryParse(valueController.text) ?? 0.0;
+
+    if (title.isEmpty || title == null) return;
+    if (value.isNegative || value == 0) return;
+
+    widget.addTransaction(
+      title: this.titleController.text,
+      value: double.tryParse(valueController.text) ?? 0.0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,20 +38,20 @@ class TransactionForm extends StatelessWidget {
           children: [
             TextField(
               controller: titleController,
+              onSubmitted: (_) => _onSubmit(),
               decoration: InputDecoration(labelText: 'Titulo'),
             ),
             TextField(
               controller: valueController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => _onSubmit(),
               decoration: InputDecoration(labelText: 'Valor R\$'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FlatButton(
-                  onPressed: () {
-                    print(titleController.text);
-                    print(valueController.text);
-                  },
+                  onPressed: _onSubmit,
                   child: Text('Nova Transação'),
                   textColor: Colors.purple,
                 ),
