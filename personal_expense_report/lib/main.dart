@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:personal_expense_report/component/transaction-form.dart';
 import 'package:personal_expense_report/component/transaction-list.dart';
-import 'package:personal_expense_report/component/transaction-user.dart';
 import 'package:personal_expense_report/model/transaction.dart';
 
 void main() => runApp(App());
@@ -13,6 +12,23 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePage(),
+      theme: ThemeData(
+        primaryColor: Colors.blueGrey[700],
+        accentColor: Colors.black38,
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(fontFamily: 'NerkoOne'),
+              bodyText1: TextStyle(fontFamily: 'AmaticSC'),
+              bodyText2: TextStyle(fontFamily: 'AmaticSC'),
+            ),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'NerkoOne',
+                  fontSize: 25,
+                ),
+              ),
+        ),
+      ),
     );
   }
 }
@@ -84,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                 elevation: 5,
               ),
             ),
-            TransactionList(_transactions),
+            TransactionList([]),
           ],
         ),
       ),
